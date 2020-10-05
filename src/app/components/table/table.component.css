@@ -1,0 +1,22 @@
+.app-table{
+    width:80%;
+    margin:auto;
+}
+
+table.app-table{
+    border-collapse:collapse;
+}
+
+  table.app-table thead, table.app-table tbody {
+    width: 100%;
+  }
+
+    table.app-table thead th:not(:first-child) {
+      border-left: 1px solid gray;
+      border-right: 1px solid gray;
+    }
+
+    table.app-table  tr td{
+        padding:1em;
+    }
+

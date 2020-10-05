@@ -3,16 +3,31 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
+import {NbThemeModule, NbLayoutModule,NbSidebarModule, NbSidebarService,NbListModule,NbIconModule,NbTabsetModule} from '@nebular/theme';
+import { ServiceProvidersComponent } from './components/service-providers/service-providers.component';
+import { ServicesComponent } from './components/services/services.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ServiceProvidersComponent,
+    ServicesComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NbThemeModule.forRoot({name:"cosmic"}),
+    NbEvaIconsModule,
+    NbLayoutModule,
+    NbSidebarModule,
+    NbListModule,
+    NbIconModule,
+    NbTabsetModule
   ],
-  providers: [],
+  providers: [
+      NbSidebarService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

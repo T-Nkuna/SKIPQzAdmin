@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'SKIPQzClient';
+
+   public sidebarItems:Array<{icon:string;text:string;link?:any[];}> = [
+      {icon:"people-outline",text:"Service Providers",link:["serviceProviders"]},
+      {icon:"gift-outline",text:"Services",link:["services"]}
+    ];
 }
+
+
