@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
-import {NbThemeModule, NbLayoutModule,NbSidebarModule, NbSidebarService,NbListModule,NbIconModule,NbTabsetModule} from '@nebular/theme';
+import {NbThemeModule, NbLayoutModule,NbSidebarModule, NbSidebarService,NbListModule,NbIconModule,NbTabsetModule,NbButtonModule, NbPopoverModule, NbInputModule} from '@nebular/theme';
 import { ServiceProvidersComponent } from './components/service-providers/service-providers.component';
 import { ServicesComponent } from './components/services/services.component';
 
@@ -23,7 +23,11 @@ import { ServicesComponent } from './components/services/services.component';
     NbSidebarModule,
     NbListModule,
     NbIconModule,
-    NbTabsetModule
+    NbTabsetModule,
+    NbButtonModule,
+    NbPopoverModule,
+    NbPopoverModule,
+    NbInputModule
   ],
   providers: [
       NbSidebarService

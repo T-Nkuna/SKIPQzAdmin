@@ -1,0 +1,19 @@
+.app-icon-button{
+    border:1px solid gray;
+    text-decoration:none;
+    border-radius:0.25em;
+    padding:0.25em 0.5em;
+    cursor:pointer;
+    font-size:1em;
+    margin:0.25em;
+    display:inline-block;
+
+}
+
+.app-icon-button>span{
+    margin-left:0.25em;
+}
+
+.app-icon-button > nb-icon{
+    font-size:1em;
+}

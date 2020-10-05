@@ -1,9 +1,9 @@
 import { Component, OnInit , Input,OnChanges,SimpleChanges,SimpleChange, ElementRef} from '@angular/core';
 
-export interface RowAction {
+export interface RowAction<T> {
   text: string;
   icon: string;
-  rowclick: (rowRecord: any) => void;
+  rowclick: (rowRecord: T) => void;
   popupTrigger?: boolean;
   popupContent?: ElementRef;
 }
@@ -12,10 +12,10 @@ export interface RowAction {
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
-export class TableComponent implements OnInit, OnChanges {
+export class TableComponent<T> implements OnInit, OnChanges {
 
-  @Input() rows:any[]=[];
-  @Input() actions: RowAction[] = [];
+  @Input() rows:T[]=[];
+  @Input() actions: RowAction<T>[] = [];
   @Input() trackByPropertyName: string = "";
   popupTriggerType = 'click'
   columnNames = [];
