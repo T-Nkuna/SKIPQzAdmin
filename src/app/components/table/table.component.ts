@@ -40,7 +40,7 @@ export class TableComponent<T> implements OnInit, OnChanges {
   }
 
   recordToValues(rec: any) {
-    return Object.values(rec);
+    return rec?Object.values(rec):[];
   }
 
   getPadding() {
@@ -48,7 +48,7 @@ export class TableComponent<T> implements OnInit, OnChanges {
   }
 
   trackByProperty= (index, rec)=> {
-    return rec[this.trackByPropertyName];
+    return rec && this.trackByPropertyName in rec?rec[this.trackByPropertyName]:null;
   }
 
 }

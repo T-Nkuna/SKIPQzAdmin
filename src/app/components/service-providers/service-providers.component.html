@@ -5,6 +5,9 @@
                 <nb-layout>
                     <nb-layout-column>
                         <div style='display:flex;flex-direction:row-reverse'><button [nbPopover]="serviceProviderFormContainer" nbButton status="basic" outline><nb-icon icon='plus-outline'></nb-icon>New</button></div>
+                        <div style="display:flex">
+                            <app-table [actions]="rowActions" [rows]="serviceProviders" [trackByPropertyName]="trackServiceProviderByProp"></app-table>
+                        </div>
                     </nb-layout-column>
                 </nb-layout>
                 
@@ -21,4 +24,12 @@
     <label>Email</label><input required nbInput status='primary' type="email" name="email" [(ngModel)]='serviceProviderData.email'/>
     <button nbButton status='primary'>Submit</button>
     </form>
+</ng-template>
+
+<ng-template #editServiceProviderTemplate>
+    <form #editServiceProviderForm="ngForm" (ngSubmit)="submitServiceProviderEditions(editServiceProviderForm.value)" style='display:grid;grid-template-columns: 30% 65%;column-gap: 0.5em;width:auto;padding:0.5em;row-gap: 0.5em;'>
+        <label>Name</label><input required nbInput status='primary' type="text" name="name" [(ngModel)]='serviceProviderEditedData.name'/>
+        <label>Email</label><input required nbInput status='primary' type="email" name="email" [(ngModel)]='serviceProviderEditedData.email'/>
+        <button nbButton status='primary'>Submit</button>
+        </form>
 </ng-template>
