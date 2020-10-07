@@ -5,11 +5,20 @@ export class ConfigurationService {
 
  
   private _env = "Dev";
-  public showSpinner =false;
+  public busy =false;
   constructor() { }
 
   public get serviceHost(){
     return this._env==="Dev"?"https://localhost:44384":"";
+  }
+
+  public  showSpinner(){
+      this.busy = true;
+  }
+
+  public  hideSpinner()
+  {
+     this.busy = false;
   }
 
   

@@ -1,0 +1,38 @@
+       <div style='display:grid;grid-template-columns: auto auto;column-gap: 2em;padding:1em'>
+        <div>
+            <p style="text-align: center;"><b>Service Provider</b> </p>
+            <form class="app-schedule-form-service-provider-form" (ngSubmit)="onSubmit()">
+                
+                   <label>Name</label><input required nbInput status='primary' type="text" name="name" [(ngModel)]='serviceProvider.name'/>
+                   <label>Email</label><input required nbInput status='primary' type="email" name="email" [(ngModel)]='serviceProvider.email'/>
+                   <button nbButton status='primary'>Submit</button>
+             </form>
+        </div>
+        <div>
+            <p style='text-align: center;'><b>Work Schedule</b></p>
+            <table>
+                <thead>
+                    <tr>
+                    <td>Day</td>
+                    <td>Start Time</td>
+                    <td>End Time</td>
+                </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let workday of workDays">
+                        <tr>
+                            <td><nb-checkbox [(ngModel)]="workday.isScheduled"></nb-checkbox>&nbsp;{{workDayToString(workday)}}</td>
+                            <td><nb-select placeholder="Select Start Time" [(ngModel)]="workday.startTimeSlot"><nb-option *ngFor="let tSlot of timeSlots" [value]="tSlot">{{tSlot}}</nb-option></nb-select></td>
+                            <td><nb-select placeholder="Select End Time" [(ngModel)]="workday.endTimeSlot"><nb-option *ngFor="let tSlot of timeSlots" [value]="tSlot">{{tSlot}}</nb-option></nb-select></td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+       
+        
+    </div>
+
+    
+   
+

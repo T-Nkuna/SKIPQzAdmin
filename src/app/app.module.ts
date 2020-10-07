@@ -4,7 +4,7 @@ import { NgModule} from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
-import {NbThemeModule, NbLayoutModule,NbSidebarModule, NbSidebarService,NbListModule,NbIconModule,NbTabsetModule,NbButtonModule, NbPopoverModule, NbInputModule} from '@nebular/theme';
+import {NbThemeModule, NbLayoutModule,NbSidebarModule, NbSidebarService,NbListModule,NbIconModule,NbTabsetModule,NbButtonModule, NbPopoverModule, NbInputModule, NbSpinnerModule, NbSelectModule, NbCheckboxModule, NbDialogModule, NbDialogService, NbDialogConfig} from '@nebular/theme';
 import { ServiceProvidersComponent } from './components/service-providers/service-providers.component';
 import { ServicesComponent } from './components/services/services.component';
 import { FormsModule } from '@angular/forms';
@@ -13,6 +13,8 @@ import {HttpClientModule} from "@angular/common/http";
 import { ServiceProviderService } from './services/service-provider.service';
 import { TableComponent } from './components/table/table.component';
 import { IconButtonComponent } from './components/icon-button/icon-button.component';
+import { ScheduleFormComponent } from './components/schedule-form/schedule-form.component';
+import { SchedulingService } from './services/scheduling.service';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { IconButtonComponent } from './components/icon-button/icon-button.compon
     ServiceProvidersComponent,
     ServicesComponent,
     TableComponent,
-    IconButtonComponent
+    IconButtonComponent,
+    ScheduleFormComponent
   ],
   imports: [
     BrowserModule,
@@ -37,12 +40,18 @@ import { IconButtonComponent } from './components/icon-button/icon-button.compon
     NbPopoverModule,
     NbInputModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NbSpinnerModule,
+    NbSelectModule,
+    NbCheckboxModule,
+    NbDialogModule.forRoot()
   ],
   providers: [
       NbSidebarService,
       ConfigurationService,
-      ServiceProviderService
+      ServiceProviderService,
+      SchedulingService,
+      NbDialogService
   ],
   bootstrap: [AppComponent]
 })

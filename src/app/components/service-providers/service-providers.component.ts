@@ -1,8 +1,9 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { NbTabComponent } from '@nebular/theme';
+import { AfterViewInit, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { NbDialogService, NbTabComponent , NbDialogConfig} from '@nebular/theme';
 import { RowAction} from '../table/table.component';
 import {ServiceProviderModel} from "../../models/service-provider.model"
 import {ServiceProviderService} from "../../services/service-provider.service"
+import { ScheduledServiceProvider } from 'src/app/models/scheduled-service-provider.model';
 
 @Component({
   selector: 'app-service-providers',
@@ -23,7 +24,7 @@ export class ServiceProvidersComponent implements OnInit,AfterViewInit {
   public serviceProviderData:ServiceProviderModel =new ServiceProviderModel();
   public serviceProviderEditedData = new ServiceProviderModel();
   @ViewChild("editServiceProviderTemplate") editServiceProviderTemplate:ElementRef;
-  constructor(private _serviceProviderService:ServiceProviderService) {
+  constructor(private _serviceProviderService:ServiceProviderService,private _dialogService:NbDialogService) {
    this.tabData = [
       {tabTitle:this.tabTitles.ServiceProviders},
       {tabTitle:this.tabTitles.DailyWorkingHours},
@@ -64,13 +65,19 @@ export class ServiceProvidersComponent implements OnInit,AfterViewInit {
     return Object.keys(this.serviceProviderData);
   }
 
-  serviceProviderFormSubmit= ()=>
+  open=(template:TemplateRef<any>)=>
   {
-      this._serviceProviderService.addServiceProvider(this.serviceProviderData)
+    this._dialogService.open(template,{hasBackdrop:true});
+  }
+
+  serviceProviderFormSubmit= (data:ScheduledServiceProvider)=>
+  {
+    console.log(data);
+      /*this._serviceProviderService.addServiceProvider(this.serviceProviderData)
           .then(newServiceProvider=>{
             this.serviceProviders = newServiceProvider?[newServiceProvider].concat(this.serviceProviders):this.serviceProviders;
             this.serviceProviderData.name = this.serviceProviderData.email = "";
-          })
+          })*/
   }
 
   editServiceProvider = (serviceProvider:ServiceProviderModel)=>{
