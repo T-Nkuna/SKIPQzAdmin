@@ -45,4 +45,8 @@ export class ServiceProviderService {
     ).toPromise()
     .catch(err=>this.reportError(err,new Array<ServiceProviderModel>()));
   }
+
+  getAllServiceProvders(){
+    return this.getServiceProviders(1,1000);
+  }
 }

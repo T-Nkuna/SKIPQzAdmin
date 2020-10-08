@@ -4,6 +4,7 @@ import { RowAction} from '../table/table.component';
 import {ServiceProviderModel} from "../../models/service-provider.model"
 import {ServiceProviderService} from "../../services/service-provider.service"
 import { ScheduledServiceProvider } from 'src/app/models/scheduled-service-provider.model';
+import { ConfigurationService } from 'src/app/services/configuration.service';
 
 @Component({
   selector: 'app-service-providers',
@@ -23,8 +24,12 @@ export class ServiceProvidersComponent implements OnInit,AfterViewInit {
   public rowActions:RowAction<ServiceProviderModel>[] =[];
   public serviceProviderData:ServiceProviderModel =new ServiceProviderModel();
   public serviceProviderEditedData = new ServiceProviderModel();
-  @ViewChild("editServiceProviderTemplate") editServiceProviderTemplate:ElementRef;
-  constructor(private _serviceProviderService:ServiceProviderService,private _dialogService:NbDialogService) {
+  @ViewChild("editServiceProviderTemplate") editServiceProviderTemplate:TemplateRef<any>;
+  constructor(
+    private _serviceProviderService:ServiceProviderService,
+    private _dialogService:NbDialogService,
+    private _configService:ConfigurationService
+    ) {
    this.tabData = [
       {tabTitle:this.tabTitles.ServiceProviders},
       {tabTitle:this.tabTitles.DailyWorkingHours},
@@ -72,12 +77,14 @@ export class ServiceProvidersComponent implements OnInit,AfterViewInit {
 
   serviceProviderFormSubmit= (data:ScheduledServiceProvider)=>
   {
-    console.log(data);
-      /*this._serviceProviderService.addServiceProvider(this.serviceProviderData)
+    
+    this._configService.showSpinner();
+      this._serviceProviderService.addServiceProvider(data)
           .then(newServiceProvider=>{
             this.serviceProviders = newServiceProvider?[newServiceProvider].concat(this.serviceProviders):this.serviceProviders;
             this.serviceProviderData.name = this.serviceProviderData.email = "";
-          })*/
+          })
+          .finally(()=>this._configService.hideSpinner());
   }
 
   editServiceProvider = (serviceProvider:ServiceProviderModel)=>{

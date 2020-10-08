@@ -1,1 +1,19 @@
-<p>services works!</p>
+<div class="app-services-container">
+    <div class="app-services-buttons-container">
+        <button nbButton outline (click)="open(addServiceTemplate)"><nb-icon icon="plus-outline"></nb-icon>Service</button>
+    </div>
+    <app-table [rows]="services" [actions]="actions"></app-table>
+</div>
+
+<ng-template #editServiceTemplate>
+    <div style="background-color: #303040;">
+        <app-service-form [service]="editedService" (serviceSubmit)="editService($event)">
+        </app-service-form>
+    </div>
+</ng-template>
+<ng-template #addServiceTemplate>
+    <div style="background-color: #303040;">
+        <app-service-form [service]="addedService" (serviceSubmit)="addService($event)">
+        </app-service-form>
+    </div>
+</ng-template>

@@ -1,0 +1,15 @@
+.app-service-form
+{
+    display:flex;
+    flex-direction:column;
+    padding:1em;
+}
+
+.app-service-form>label
+{
+    color:white;
+}
+
+.app-service-form>*{
+    margin:0.25em;
+}

@@ -15,6 +15,8 @@ import { TableComponent } from './components/table/table.component';
 import { IconButtonComponent } from './components/icon-button/icon-button.component';
 import { ScheduleFormComponent } from './components/schedule-form/schedule-form.component';
 import { SchedulingService } from './services/scheduling.service';
+import { ServiceFormComponent } from './components/service-form/service-form.component';
+import { ServiceManagerService } from './services/service-manager.service';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { SchedulingService } from './services/scheduling.service';
     ServicesComponent,
     TableComponent,
     IconButtonComponent,
-    ScheduleFormComponent
+    ScheduleFormComponent,
+    ServiceFormComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +54,8 @@ import { SchedulingService } from './services/scheduling.service';
       ConfigurationService,
       ServiceProviderService,
       SchedulingService,
-      NbDialogService
+      NbDialogService,
+      ServiceManagerService
   ],
   bootstrap: [AppComponent]
 })

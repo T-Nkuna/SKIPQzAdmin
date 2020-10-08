@@ -1,11 +1,13 @@
-import { Component, OnInit , Input,OnChanges,SimpleChanges,SimpleChange, ElementRef} from '@angular/core';
+import { Template } from '@angular/compiler/src/render3/r3_ast';
+import { Component, OnInit , Input,OnChanges,SimpleChanges,SimpleChange, ElementRef, TemplateRef} from '@angular/core';
+import { NbDialogService } from '@nebular/theme';
 
 export interface RowAction<T> {
   text: string;
   icon: string;
   rowclick: (rowRecord: T) => void;
   popupTrigger?: boolean;
-  popupContent?: ElementRef;
+  popupContent?: TemplateRef<any>;
 }
 @Component({
   selector: 'app-table',
@@ -20,7 +22,7 @@ export class TableComponent<T> implements OnInit, OnChanges {
   popupTriggerType = 'click'
   columnNames = [];
   
-  constructor() { }
+  constructor(private _dialogService:NbDialogService) { }
 
  
 
@@ -49,6 +51,14 @@ export class TableComponent<T> implements OnInit, OnChanges {
 
   trackByProperty= (index, rec)=> {
     return rec && this.trackByPropertyName in rec?rec[this.trackByPropertyName]:null;
+  }
+
+  onActionClick(rowEle:T,popupTrigger:boolean,popupContent:TemplateRef<any>,rowClick:(rec:T)=>void){
+    rowClick(rowEle);
+    if(popupTrigger){
+      this._dialogService.open(popupContent);
+    }
+    
   }
 
 }

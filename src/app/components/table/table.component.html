@@ -3,7 +3,7 @@
   <thead *ngIf="rows && rows.length>0"><tr><th *ngFor="let colName of columnNames">{{colName}}</th><th>Action</th></tr></thead>
   <tbody>
     <ng-container *ngFor="let rowEle of rows;trackBy:trackByProperty">
-      <tr *ngIf="rowEle" [ngStyle]="getPadding()" ><td *ngFor="let propVal of recordToValues(rowEle)">{{propVal}}</td><td><ng-container *ngFor="let action of actions"><app-icon-button (click)="action.rowclick(rowEle)" [icon]="action.icon" [nbPopover]='action.popupTrigger?action.popupContent:undefined' [nbPopoverTrigger]="action.popupTrigger?popupTriggerType:'noop'"></app-icon-button></ng-container></td></tr>
+      <tr *ngIf="rowEle" [ngStyle]="getPadding()" ><td *ngFor="let propVal of recordToValues(rowEle)">{{propVal}}</td><td><ng-container *ngFor="let action of actions"><app-icon-button (click)="onActionClick(rowEle,action.popupTrigger,action.popupContent,action.rowclick)" [icon]="action.icon"></app-icon-button></ng-container></td></tr>
     </ng-container>
     </tbody>
 </table>

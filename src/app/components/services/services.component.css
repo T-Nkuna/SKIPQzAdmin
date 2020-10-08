@@ -1,0 +1,5 @@
+.app-services-buttons-container
+{
+    display:flex;
+    flex-direction:row-reverse;
+}
