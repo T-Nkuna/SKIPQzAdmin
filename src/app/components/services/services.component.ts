@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { NbDialogService } from '@nebular/theme';
+import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { ServiceProviderModel } from 'src/app/models/service-provider.model';
 import { ConfigurationService } from 'src/app/services/configuration.service';
 import { ServiceManagerService } from 'src/app/services/service-manager.service';
@@ -16,6 +16,7 @@ export class ServicesComponent implements OnInit,AfterViewInit {
   public addedService:ServiceModel = new ServiceModel("",0,0);
   public editedServic:ServiceModel = new ServiceModel("",0,0);
   public actions:Array<RowAction<ServiceModel>> = [];
+  public openedDialog:NbDialogRef<any>;
   @ViewChild("editServiceTemplate") public editServiceTemplate:TemplateRef<any>;
   constructor(private _dialogService:NbDialogService,private _configService:ConfigurationService,private _serviceManagerService:ServiceManagerService) {
       
@@ -55,6 +56,7 @@ export class ServicesComponent implements OnInit,AfterViewInit {
        if(newService.serviceId && newService.serviceId!==-1){
          this.services= [newService].concat(this.services);
        }
+       this.openedDialog.close();
     }).finally(()=>{
       this._configService.hideSpinner();
     })
@@ -65,9 +67,9 @@ export class ServicesComponent implements OnInit,AfterViewInit {
 
   }
 
-  open(template:TemplateRef<any>)
+  open(templateEle:TemplateRef<any>)
   {
-    this._dialogService.open(template);
+   this.openedDialog= this._dialogService.open(templateEle);
   }
 
 }

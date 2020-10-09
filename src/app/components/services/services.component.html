@@ -1,9 +1,15 @@
-<div class="app-services-container">
-    <div class="app-services-buttons-container">
-        <button nbButton outline (click)="open(addServiceTemplate)"><nb-icon icon="plus-outline"></nb-icon>Service</button>
-    </div>
-    <app-table [rows]="services" [actions]="actions"></app-table>
-</div>
+<nb-layout>
+    <nb-layout-column>
+        <div class="app-services-container">
+            <div class="app-services-buttons-container">
+                <button nbButton outline (click)="open(addServiceTemplate)"><nb-icon icon="plus-outline"></nb-icon>Service</button>
+            </div>
+            <app-table [rows]="services" [actions]="actions"></app-table>
+        </div>
+    </nb-layout-column>
+</nb-layout>
+
+
 
 <ng-template #editServiceTemplate>
     <div style="background-color: #303040;">
