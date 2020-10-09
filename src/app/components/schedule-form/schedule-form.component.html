@@ -5,6 +5,9 @@
                 
                    <label>Name</label><input required nbInput status='primary' type="text" name="name" [(ngModel)]='serviceProvider.name'/>
                    <label>Email</label><input required nbInput status='primary' type="email" name="email" [(ngModel)]='serviceProvider.email'/>
+                   <label>Services</label><nb-select *ngIf="serviceOptions.length>0" multiple name="selectedServices" [selected]="selectedServicesIds" placeholder="Select Services" (selectedChange)="onSelectionChange($event)">
+                       <nb-option *ngFor="let serviceOption of serviceOptions" [value]="serviceOption.serviceId">{{serviceOption.name+" - "+serviceOption.serviceId}}</nb-option>
+                   </nb-select>
                    <button nbButton status='primary'>Submit</button>
              </form>
         </div>

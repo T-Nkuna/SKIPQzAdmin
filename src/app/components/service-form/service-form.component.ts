@@ -12,7 +12,7 @@ export class ServiceFormComponent implements OnInit {
 
   @Input() service:ServiceModel = new ServiceModel("",0,0);
   @Output() serviceSubmit = new EventEmitter<ServiceModel>();
-  selectedServiceProvidersIds:number[] = [];
+  selectedServiceProvidersIds:string[] = [];
   constructor(private _serviceProviderService:ServiceProviderService,private _configService:ConfigurationService) { }
 
   ngOnInit(): void {
@@ -27,7 +27,7 @@ export class ServiceFormComponent implements OnInit {
 
   onSubmit()
   {
-    this.service.serviceProviders = this.service.serviceProviders.filter(sp=>this.selectedServiceProvidersIds.indexOf(sp.serviceProviderId)>=0);
+    this.service.serviceProviders = this.service.serviceProviders.filter(sp=>this.selectedServiceProvidersIds.indexOf(sp.serviceProviderId.toString())>=0);
     this.serviceSubmit.emit(this.service);
   }
 
