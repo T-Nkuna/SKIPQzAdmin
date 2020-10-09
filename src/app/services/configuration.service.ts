@@ -9,7 +9,7 @@ export class ConfigurationService {
   constructor() { }
 
   public get serviceHost(){
-    return this._env==="Dev"?"https://localhost:44384":"";
+    return this._env==="Dev"?"https://localhost:44384":"https://skipqzapi.etiocs.co.za";
   }
 
   public  showSpinner(){

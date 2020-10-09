@@ -23,6 +23,11 @@ export class ServiceManagerService extends JournalingService{
         .catch((err)=>this.reportError<ServiceModel[]>(err, new Array<ServiceModel>()));
     }
 
+    getAllServices()
+    {
+       return this.getServices(1,1000);
+    }
+
     addService(service:ServiceModel)
     {
         return this._httpClient.post<ServiceModel>(this.serviceUrl,service)
