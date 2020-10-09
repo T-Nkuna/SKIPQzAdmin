@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { NbDialogService, NbTabComponent , NbDialogConfig} from '@nebular/theme';
+import { NbDialogService, NbTabComponent , NbDialogConfig, NbDialogRef} from '@nebular/theme';
 import { RowAction} from '../table/table.component';
 import {ServiceProviderModel} from "../../models/service-provider.model"
 import {ServiceProviderService} from "../../services/service-provider.service"
@@ -24,6 +24,7 @@ export class ServiceProvidersComponent implements OnInit,AfterViewInit {
   public rowActions:RowAction<ServiceProviderModel>[] =[];
   public serviceProviderData:ServiceProviderModel =new ServiceProviderModel();
   public serviceProviderEditedData = new ServiceProviderModel();
+  public openedDialog:NbDialogRef<any>;
   @ViewChild("editServiceProviderTemplate") editServiceProviderTemplate:TemplateRef<any>;
   constructor(
     private _serviceProviderService:ServiceProviderService,
@@ -51,11 +52,12 @@ export class ServiceProvidersComponent implements OnInit,AfterViewInit {
       switch(tabComponent.tabTitle){
         case this.tabTitles.ServiceProviders:
           //fetch service providers
+          this._configService.showSpinner();
           this._serviceProviderService.getServiceProviders(1,10)
           .then(response=>{
             this.serviceProviders = response;
            
-          })
+          }).finally(()=>this._configService.hideSpinner())
         break;
         case this.tabTitles.DailyWorkingHours:
           //fetch daily workgin hours for service providers
@@ -72,17 +74,19 @@ export class ServiceProvidersComponent implements OnInit,AfterViewInit {
 
   open=(template:TemplateRef<any>)=>
   {
-    this._dialogService.open(template,{hasBackdrop:true});
+    this.openedDialog = this._dialogService.open(template,{hasBackdrop:true});
   }
+  
 
   serviceProviderFormSubmit= (data:ScheduledServiceProvider)=>
   {
-    
+    data.serviceProviderId = undefined;
     this._configService.showSpinner();
       this._serviceProviderService.addServiceProvider(data)
           .then(newServiceProvider=>{
-            this.serviceProviders = newServiceProvider?[newServiceProvider].concat(this.serviceProviders):this.serviceProviders;
+            this.serviceProviders = newServiceProvider && newServiceProvider.serviceProviderId!==-1?[newServiceProvider].concat(this.serviceProviders):this.serviceProviders;
             this.serviceProviderData.name = this.serviceProviderData.email = "";
+            this.openedDialog.close();
           })
           .finally(()=>this._configService.hideSpinner());
   }
