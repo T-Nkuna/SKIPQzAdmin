@@ -16,7 +16,7 @@ import { ServiceManagerService } from 'src/app/services/service-manager.service'
 export class ScheduleFormComponent implements OnInit {
 
   @Input() serviceProvider:ServiceProviderModel = new ServiceProviderModel();
-  @Output() submit = new EventEmitter<ScheduledServiceProvider>();
+  @Output() serviceProviderFormSubmit = new EventEmitter<ScheduledServiceProvider>();
   @Input() public selectedServicesIds:number[] =[];
   public timeSlots:string[]=[];
   public workDays:ScheduledWorkDay[] = WorkDay.getWorkDays().map(wd=>new ScheduledWorkDay(wd));
@@ -46,13 +46,12 @@ export class ScheduleFormComponent implements OnInit {
     
     let scheduledServiceProvider = new ScheduledServiceProvider(this.serviceProvider,this.workDays.filter(w=>w.isScheduled));
     scheduledServiceProvider.services = this.serviceOptions.filter(service=>this.selectedServicesIds.indexOf(service.serviceId)>=0);
-    this.submit.emit(scheduledServiceProvider);
+    this.serviceProviderFormSubmit.emit(scheduledServiceProvider);
   }
 
-  public onSelectionChange(changes:any){
+  public onSelectionChange(changes:Array<number>){
     this.selectedServicesIds = changes;
   }
-
 }
 
 

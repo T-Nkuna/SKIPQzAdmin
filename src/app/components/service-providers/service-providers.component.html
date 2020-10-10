@@ -19,13 +19,13 @@
 
 <ng-template #serviceProviderFormContainer let-data let-ref="dialogRef">
     <div style="background-color:#303050;">
-        <app-schedule-form (submit)="serviceProviderFormSubmit($event)" [serviceProvider]="serviceProviderData"></app-schedule-form>
+        <app-schedule-form (serviceProviderFormSubmit)="serviceProviderFormSubmit($event)" [serviceProvider]="serviceProviderData"></app-schedule-form>
     </div>
     
 </ng-template>
 
 <ng-template #editServiceProviderTemplate>
     <div style="background-color:#303050;">
-        <app-schedule-form (submit)="submitServiceProviderEditions($event)" [serviceProvider]="serviceProviderEditedData"></app-schedule-form>
+        <app-schedule-form (serviceProviderFormSubmit)="submitServiceProviderEditions($event)" [serviceProvider]="serviceProviderEditedData"></app-schedule-form>
     </div>
 </ng-template>

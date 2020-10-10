@@ -31,18 +31,38 @@ export function getDayOfWeekString(workDay:DayOfWeek){
 
 export class WorkDay{
     public dayOfWeek:DayOfWeek;
-    public startTimeSlot:string;
-    public endTimeSlot:string;
-
-    public constructor(dayOfWeek:DayOfWeek,startTimeSlot:string,endTimeSlot:string)
+    public shifts:Array<Shift> =[];
+    public constructor(dayOfWeek:DayOfWeek,startTimeSlot:string="",endTimeSlot:string="")
     {
         this.dayOfWeek =dayOfWeek;
-        this.startTimeSlot =startTimeSlot;
-        this.endTimeSlot = endTimeSlot;
+        if(startTimeSlot!=="" && endTimeSlot!=="")
+        {
+            this.shifts.push({startTimeSlot,endTimeSlot});
+        }
+       
+    }
+
+    public get firstShift():Shift
+    {
+        if(this.shifts.length==0){
+            this.shifts.push(new Shift("",""));
+        }
+        return this.shifts[0];
     }
     public static getWorkDays(){
          return Object.keys(DayOfWeek).filter(prop=>isNaN(Number(prop))).map(prop=>{
             return new WorkDay(DayOfWeek[prop],"","");
          });
+    }
+}
+
+export class Shift{
+    public startTimeSlot:string;
+    public  endTimeSlot:string;
+
+    constructor(startTimeSlot:string,endTimeSlot:string)
+    {
+        this.startTimeSlot =startTimeSlot;
+        this.endTimeSlot =endTimeSlot;
     }
 }
