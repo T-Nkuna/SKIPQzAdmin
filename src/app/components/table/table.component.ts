@@ -19,10 +19,12 @@ export class TableComponent<T> implements OnInit, OnChanges {
   @Input() rows:T[]=[];
   @Input() actions: RowAction<T>[] = [];
   @Input() trackByPropertyName: string = "";
+  @Input() excludedColumns:Array<string> = [];
   popupTriggerType = 'click'
   columnNames = [];
   
-  constructor(private _dialogService:NbDialogService) { }
+  constructor(private _dialogService:NbDialogService) {
+   }
 
  
 
@@ -33,7 +35,7 @@ export class TableComponent<T> implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if ("rows" in changes && this.columnNames.length == 0) {
-      this.columnNames = changes["rows"].currentValue.length > 0 ? Object.keys(changes['rows'].currentValue[0]) : [];
+      this.columnNames = (changes["rows"].currentValue.length > 0 ? Object.keys(changes['rows'].currentValue[0]) : []);
     }
 
     if ('actions' in changes) {
@@ -41,8 +43,13 @@ export class TableComponent<T> implements OnInit, OnChanges {
     }
   }
 
-  recordToValues(rec: any) {
+  recordToValues(rec: T) {
     return rec?Object.values(rec):[];
+  }
+
+  recordToEntries(rec:T)
+  {
+    return rec? Object.entries(rec).map(entry=>({key:entry[0],value:entry[1]})):[]
   }
 
   getPadding() {
@@ -61,4 +68,8 @@ export class TableComponent<T> implements OnInit, OnChanges {
     
   }
 
+  isExcluded(columnName:string)
+  {
+    return this.excludedColumns.includes(columnName);
+  }
 }

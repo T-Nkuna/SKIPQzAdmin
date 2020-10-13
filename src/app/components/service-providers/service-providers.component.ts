@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, TemplateRef, ViewChild, Input } from '@angular/core';
 import { NbDialogService, NbTabComponent , NbDialogConfig, NbDialogRef} from '@nebular/theme';
 import { RowAction} from '../table/table.component';
 import {ServiceProviderModel} from "../../models/service-provider.model"
@@ -25,6 +25,7 @@ export class ServiceProvidersComponent implements OnInit,AfterViewInit {
   public serviceProviderData:ServiceProviderModel =new ServiceProviderModel();
   public serviceProviderEditedData = new ServiceProviderModel();
   public openedDialog:NbDialogRef<any>;
+  @Input() public excludedColumns:Array<string> = [];
   @ViewChild("editServiceProviderTemplate") editServiceProviderTemplate:TemplateRef<any>;
   constructor(
     private _serviceProviderService:ServiceProviderService,
@@ -36,6 +37,8 @@ export class ServiceProvidersComponent implements OnInit,AfterViewInit {
       {tabTitle:this.tabTitles.DailyWorkingHours},
       {tabTitle:this.tabTitles.BusinessClosedDates}
     ];
+
+    this.excludedColumns = [(this.trackServiceProviderByProp),"services","scheduledWorkDays"];
    }
 
   ngOnInit(): void {

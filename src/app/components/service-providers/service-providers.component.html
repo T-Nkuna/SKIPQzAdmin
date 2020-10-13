@@ -5,7 +5,7 @@
                 <nb-layout>
                     <nb-layout-column>
                         <div style='display:flex;flex-direction:row-reverse'><button (click)="open(serviceProviderFormContainer)" nbButton status="basic" outline><nb-icon icon='plus-outline'></nb-icon>New</button></div>
-                        <app-table [actions]="rowActions" [rows]="serviceProviders" [trackByPropertyName]="trackServiceProviderByProp"></app-table>
+                        <app-table [actions]="rowActions" [rows]="serviceProviders" [trackByPropertyName]="trackServiceProviderByProp" [excludedColumns]="excludedColumns"></app-table>
                         
                     </nb-layout-column>
                 </nb-layout>

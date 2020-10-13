@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { ServiceProviderModel } from 'src/app/models/service-provider.model';
-import { getDayOfWeekString, WorkDay } from 'src/app/models/work-day.model';
+import { getDayOfWeekString, Shift, WorkDay } from 'src/app/models/work-day.model';
 import { ConfigurationService } from 'src/app/services/configuration.service';
 import { SchedulingService } from 'src/app/services/scheduling.service';
 import {ScheduledWorkDay} from "../../models/scheduled-work-day.model";
@@ -15,7 +15,7 @@ import { ServiceManagerService } from 'src/app/services/service-manager.service'
 })
 export class ScheduleFormComponent implements OnInit {
 
-  @Input() serviceProvider:ServiceProviderModel = new ServiceProviderModel();
+  @Input() serviceProvider:ServiceProviderModel|ScheduledServiceProvider = new ServiceProviderModel();
   @Output() serviceProviderFormSubmit = new EventEmitter<ScheduledServiceProvider>();
   @Input() public selectedServicesIds:number[] =[];
   public timeSlots:string[]=[];
@@ -29,6 +29,20 @@ export class ScheduleFormComponent implements OnInit {
 
   ngOnInit(): void {
     this._configService.showSpinner();
+    if("scheduledWorkDays" in this.serviceProvider){
+      for(let workDay of this.workDays){
+        let targetWorkIndex = this.serviceProvider.scheduledWorkDays.findIndex(wD=>workDay.dayOfWeek===wD.dayOfWeek);
+
+        if(targetWorkIndex>=0)
+        {
+          let targetWorkDay = this.serviceProvider.scheduledWorkDays[targetWorkIndex];
+          workDay.isScheduled = true;
+          let firstShift = targetWorkDay.shifts.length>0?new Shift(targetWorkDay.shifts[0].startTimeSlot,targetWorkDay.shifts[0].endTimeSlot):workDay.firstShift;
+          workDay.firstShift.startTimeSlot = firstShift.startTimeSlot;
+          workDay.firstShift.endTimeSlot = firstShift.endTimeSlot;
+        }
+      }
+    }
     Promise.all([this._schedulingService.getTimeSlots(),this._serviceManagerService.getAllServices()])
     .then(responses=>{
         this.timeSlots = responses[0];
