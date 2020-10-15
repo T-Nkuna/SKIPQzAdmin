@@ -43,6 +43,7 @@ export class ScheduleFormComponent implements OnInit {
         }
       }
     }
+    this.selectedServicesIds = this.serviceProvider.services.map(s=>s.serviceId);
     Promise.all([this._schedulingService.getTimeSlots(),this._serviceManagerService.getAllServices()])
     .then(responses=>{
         this.timeSlots = responses[0];
