@@ -9,5 +9,6 @@ export class ScheduledServiceProvider extends ServiceProviderModel{
       this.name = serviceProvider.name;
       this.serviceProviderId = serviceProvider.serviceProviderId;
       this.scheduledWorkDays = scheduledWorkDays;
+      this.imageUrl = serviceProvider.imageUrl;
     }
  }

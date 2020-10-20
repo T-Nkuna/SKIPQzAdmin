@@ -30,7 +30,11 @@ export class ServiceManagerService extends JournalingService{
 
     addService(service:ServiceModel)
     {
-        return this._httpClient.post<ServiceModel>(this.serviceUrl,service)
+        let formData = new FormData();
+        Object.keys(service).forEach(prop=>{
+            formData.append(prop,prop==="imageFile"?service[prop]:(typeof(service[prop])).toLowerCase()==="object"?JSON.stringify(service[prop]):service[prop]);
+        });
+        return this._httpClient.post<ServiceModel>(this.serviceUrl,formData)
             .toPromise()
             .catch((err)=>this.reportError(err,new ServiceModel("",0,0)))
     }

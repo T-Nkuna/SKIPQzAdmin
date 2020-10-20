@@ -1,10 +1,11 @@
        <div style='display:grid;grid-template-columns: auto auto;column-gap: 2em;padding:1em'>
         <div>
             <p style="text-align: center;"><b>Service Provider</b> </p>
-            <form class="app-schedule-form-service-provider-form" (ngSubmit)="onSubmit()">
+            <form class="app-schedule-form-service-provider-form" (ngSubmit)="onSubmit()" #serviceProviderForm>
                 
                    <label>Name</label><input required nbInput status='primary' type="text" name="name" [(ngModel)]='serviceProvider.name'/>
                    <label>Email</label><input required nbInput status='primary' type="email" name="email" [(ngModel)]='serviceProvider.email'/>
+                   <label>Photo</label><input name="imageFile" nbInput status="primary" type="file">
                    <label>Services</label><nb-select *ngIf="serviceOptions.length>0" multiple name="selectedServices" [selected]="selectedServicesIds" placeholder="Select Services" (selectedChange)="onSelectionChange($event)">
                        <nb-option *ngFor="let serviceOption of serviceOptions" [value]="serviceOption.serviceId">{{serviceOption.name+" - "+serviceOption.serviceId}}</nb-option>
                    </nb-select>

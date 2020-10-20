@@ -2,23 +2,22 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ServiceProviderModel } from '../models/service-provider.model';
 import { ConfigurationService } from './configuration.service';
+import { JournalingService } from './journaling.service';
 
 @Injectable()
-export class ServiceProviderService {
+export class ServiceProviderService extends JournalingService{
 
   private _serviceUrl="";
   constructor(private _httpClient:HttpClient,private _config:ConfigurationService) { 
+      super();
      this._serviceUrl = `${_config.serviceHost}/api/serviceprovider`;
   }
 
-  reportError<T>(err:any,errorReturnVal:T){
-    alert("Unkown Error!");
-    return errorReturnVal;
-  }
   addServiceProvider(serviceProvider:ServiceProviderModel){
+    let formData = this.toForm(serviceProvider);
       return this._httpClient.post<ServiceProviderModel>(
         `${this._serviceUrl}`,
-        serviceProvider
+         formData
       ).toPromise()
       .catch(err=>this.reportError(err,new ServiceProviderModel()));
   }

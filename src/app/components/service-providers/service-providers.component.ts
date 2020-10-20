@@ -38,7 +38,7 @@ export class ServiceProvidersComponent implements OnInit,AfterViewInit {
       {tabTitle:this.tabTitles.BusinessClosedDates}
     ];
 
-    this.excludedColumns = [(this.trackServiceProviderByProp),"services","scheduledWorkDays"];
+    this.excludedColumns = [(this.trackServiceProviderByProp),"services","scheduledWorkDays","imageFile"];
    }
 
   ngOnInit(): void {

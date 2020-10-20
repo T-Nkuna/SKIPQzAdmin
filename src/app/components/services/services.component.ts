@@ -17,6 +17,7 @@ export class ServicesComponent implements OnInit,AfterViewInit {
   public editedServic:ServiceModel = new ServiceModel("",0,0);
   public actions:Array<RowAction<ServiceModel>> = [];
   public openedDialog:NbDialogRef<any>;
+  public excludedColumns:string[] = ["imageFile","imageUrl"];
   @ViewChild("editServiceTemplate") public editServiceTemplate:TemplateRef<any>;
   constructor(private _dialogService:NbDialogService,private _configService:ConfigurationService,private _serviceManagerService:ServiceManagerService) {
       

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { ServiceProviderModel } from 'src/app/models/service-provider.model';
 import { getDayOfWeekString, Shift, WorkDay } from 'src/app/models/work-day.model';
@@ -18,6 +18,7 @@ export class ScheduleFormComponent implements OnInit {
   @Input() serviceProvider:ServiceProviderModel|ScheduledServiceProvider = new ServiceProviderModel();
   @Output() serviceProviderFormSubmit = new EventEmitter<ScheduledServiceProvider>();
   @Input() public selectedServicesIds:number[] =[];
+  @ViewChild("serviceProviderForm") serviceProviderForm:ElementRef;
   public timeSlots:string[]=[];
   public workDays:ScheduledWorkDay[] = WorkDay.getWorkDays().map(wd=>new ScheduledWorkDay(wd));
   public serviceOptions:ServiceModel[] = [];
@@ -58,9 +59,10 @@ export class ScheduleFormComponent implements OnInit {
   }
 
   public onSubmit=()=>{
-    
+    let selectedFiles:FileList = this.serviceProviderForm.nativeElement.querySelector("[name='imageFile']").files;
     let scheduledServiceProvider = new ScheduledServiceProvider(this.serviceProvider,this.workDays.filter(w=>w.isScheduled));
     scheduledServiceProvider.services = this.serviceOptions.filter(service=>this.selectedServicesIds.indexOf(service.serviceId)>=0);
+    scheduledServiceProvider.imageFile = selectedFiles.length>0?selectedFiles.item(0):null;
     this.serviceProviderFormSubmit.emit(scheduledServiceProvider);
   }
 
