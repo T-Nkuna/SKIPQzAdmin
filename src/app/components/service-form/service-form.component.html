@@ -3,11 +3,6 @@
         <label>Name</label><input nbInput status="primary" type="text" name="name" [(ngModel)]="service.name">
         <label>Duration</label><input nbInput status="primary" type="text" name="duration" [(ngModel)]="service.duration">
         <label>Cost</label><input  nbInput status="primary" type="text" name="cost" [(ngModel)]="service.cost">
-        <label>Service Providers</label><nb-select multiple [(ngModel)]="selectedServiceProvidersIds" name="selectedServiceProvidersIds">
-            <nb-option *ngFor="let serviceProvider of service.serviceProviders" [value]="serviceProvider.serviceProviderId">
-                {{serviceProvider.name+" - "+serviceProvider.email}}
-            </nb-option>
-        </nb-select>
         <label>Image File</label><input name="imageFile" type="file" nbInput status="primary">
         <button nbButton status="primary">Submit</button>
     </form>

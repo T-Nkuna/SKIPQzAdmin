@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { NbDialogRef, NbDialogService } from '@nebular/theme';
+import { NbDialogConfig, NbDialogRef, NbDialogService } from '@nebular/theme';
 import { ServiceProviderModel } from 'src/app/models/service-provider.model';
 import { ConfigurationService } from 'src/app/services/configuration.service';
 import { ServiceManagerService } from 'src/app/services/service-manager.service';
@@ -14,10 +14,11 @@ export class ServicesComponent implements OnInit,AfterViewInit {
 
   public services:Array<ServiceModel> = [];
   public addedService:ServiceModel = new ServiceModel("",0,0);
-  public editedServic:ServiceModel = new ServiceModel("",0,0);
+  public editedService:ServiceModel = new ServiceModel("",0,0);
   public actions:Array<RowAction<ServiceModel>> = [];
   public openedDialog:NbDialogRef<any>;
   public excludedColumns:string[] = ["imageFile","imageUrl"];
+  editDialog:NbDialogRef<any>;
   @ViewChild("editServiceTemplate") public editServiceTemplate:TemplateRef<any>;
   constructor(private _dialogService:NbDialogService,private _configService:ConfigurationService,private _serviceManagerService:ServiceManagerService) {
       
@@ -33,13 +34,39 @@ export class ServicesComponent implements OnInit,AfterViewInit {
 
   ngAfterViewInit(){
     this.actions = [
-      {icon:"edit-outline",rowclick:this.editService,popupTrigger:true,popupContent:this.editServiceTemplate,text:""}
+      {icon:"edit-outline",rowclick:this.editService ,popupTrigger:true,popupContent:this.editServiceTemplate,text:""}
     ]
   }
 
-  editService = (serviceModel:ServiceModel)=>
+  editService = (serviceModel:ServiceModel,dialogRef:NbDialogRef<any>)=>
   {
+    this.editedService =serviceModel;
+    this.editDialog = dialogRef;
+     /* this._configServ
+     thiice.showSpinner();
+      this._serviceManagerService.updateService(serviceModel)
+      .then(updatedService=>{
+        console.log(updatedService);
+        alert("Updated");
+      }).finally(()=>this._configService.hideSpinner())*/
+  }
 
+  submitServiceEditions = (service:ServiceModel)=>{
+
+     this._configService.showSpinner();
+      this._serviceManagerService.updateService(service)
+      .then(updatedService=>{
+        this.services = this.services.map(sv=>sv.serviceId===updatedService.serviceId?updatedService:sv);
+        if(updatedService.serviceId>0){
+            alert("Updated");
+        }
+      }).finally(()=>{
+        this._configService.hideSpinner();
+        if(this.editDialog)
+        {
+          this.editDialog.close();
+        }
+      })
   }
 
   deleteService = (serviceModel:ServiceModel)=>

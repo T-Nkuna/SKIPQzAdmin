@@ -20,19 +20,19 @@ export class ServiceFormComponent implements OnInit {
   constructor(private _serviceProviderService:ServiceProviderService,private _configService:ConfigurationService) { }
 
   ngOnInit(): void {
-      this._configService.showSpinner();
+      /*this._configService.showSpinner();
       this._serviceProviderService.getAllServiceProvders()
       .then(sProviders=>{
         this.service.serviceProviders = sProviders;
       }).finally(()=>{
         this._configService.hideSpinner();
-      })
+      })*/
   }
 
   onSubmit()
   {
     let selectedFiles = this.serviceForm.nativeElement.querySelector("input[name='imageFile']").files;
-    this.service.serviceProviders = this.service.serviceProviders.filter(sp=>this.selectedServiceProvidersIds.indexOf(sp.serviceProviderId.toString())>=0);
+   // this.service.serviceProviders = this.service.serviceProviders.filter(sp=>this.selectedServiceProvidersIds.indexOf(sp.serviceProviderId.toString())>=0);
     this.service.imageFile = selectedFiles.length>0?selectedFiles.item(0):null;
     this.serviceSubmit.emit(this.service);
   }

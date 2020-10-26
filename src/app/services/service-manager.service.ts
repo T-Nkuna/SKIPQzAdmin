@@ -48,7 +48,10 @@ export class ServiceManagerService extends JournalingService{
 
     updateService(service:ServiceModel)
     {
-        return this._httpClient.put<ServiceModel>(`${this.serviceUrl}/${service.serviceId}`,service)
+        return this._httpClient.put<ServiceModel>(
+            `${this.serviceUrl}/${service.serviceId}`,
+            this.toForm(service)
+        )
         .toPromise()
         .catch(err=>this.reportError<ServiceModel>(err, new ServiceModel("",0,0)));
     }
