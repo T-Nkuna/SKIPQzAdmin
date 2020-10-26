@@ -94,13 +94,23 @@ export class ServiceProvidersComponent implements OnInit,AfterViewInit {
           .finally(()=>this._configService.hideSpinner());
   }
 
-  editServiceProvider = (serviceProvider:ServiceProviderModel)=>{
+  editServiceProvider = (serviceProvider:ScheduledServiceProvider)=>{
       this.serviceProviderEditedData = serviceProvider;
+     
   }
 
-  submitServiceProviderEditions= (serviceProviderEdition:ServiceProviderModel)=>
+  submitServiceProviderEditions= (serviceProviderEdition:ScheduledServiceProvider)=>
   {
-    console.log(serviceProviderEdition);
+   
+   // serviceProviderEdition.services.forEach(sv=>sv.serviceId=undefined);
+    this._serviceProviderService.updateServiceProvider(serviceProviderEdition)
+    .then(updatedServiceProvider=>{
+        this.serviceProviderEditedData = updatedServiceProvider;
+        this.serviceProviders = this.serviceProviders.map(sp=>{
+          return sp.serviceProviderId ===this.serviceProviderEditedData.serviceProviderId?this.serviceProviderEditedData:sp;
+        })
+    });
+    //console.log(serviceProviderEdition);
   }
 
   deleteServiceProvider=(serviceProvider:ServiceProviderModel)=>{
@@ -109,7 +119,7 @@ export class ServiceProvidersComponent implements OnInit,AfterViewInit {
         if(removed && removed.serviceProviderId>0){
           this.serviceProviders = this.serviceProviders.filter(sp=>sp && sp.serviceProviderId!==removed.serviceProviderId);
         }
-      })
+      });
   }
 
 }

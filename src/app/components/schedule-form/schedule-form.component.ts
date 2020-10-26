@@ -37,10 +37,14 @@ export class ScheduleFormComponent implements OnInit {
         if(targetWorkIndex>=0)
         {
           let targetWorkDay = this.serviceProvider.scheduledWorkDays[targetWorkIndex];
+          let shifts = targetWorkDay.shifts;
           workDay.isScheduled = true;
           let firstShift = targetWorkDay.shifts.length>0?new Shift(targetWorkDay.shifts[0].startTimeSlot,targetWorkDay.shifts[0].endTimeSlot):workDay.firstShift;
           workDay.firstShift.startTimeSlot = firstShift.startTimeSlot;
           workDay.firstShift.endTimeSlot = firstShift.endTimeSlot;
+          workDay.workingDayId = targetWorkDay.workingDayId;
+          workDay.firstShiftId = shifts.length>0?shifts[0].timeIntervalId:0;
+          workDay.shifts = targetWorkDay.shifts;
         }
       }
     }
@@ -59,8 +63,9 @@ export class ScheduleFormComponent implements OnInit {
   }
 
   public onSubmit=()=>{
+    let selectedWorkDays = this.workDays.filter(w=>w.isScheduled);
     let selectedFiles:FileList = this.serviceProviderForm.nativeElement.querySelector("[name='imageFile']").files;
-    let scheduledServiceProvider = new ScheduledServiceProvider(this.serviceProvider,this.workDays.filter(w=>w.isScheduled));
+    let scheduledServiceProvider = new ScheduledServiceProvider(this.serviceProvider,selectedWorkDays);
     scheduledServiceProvider.services = this.serviceOptions.filter(service=>this.selectedServicesIds.indexOf(service.serviceId)>=0);
     scheduledServiceProvider.imageFile = selectedFiles.length>0?selectedFiles.item(0):null;
     this.serviceProviderFormSubmit.emit(scheduledServiceProvider);

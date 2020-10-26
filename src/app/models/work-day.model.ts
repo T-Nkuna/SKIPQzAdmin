@@ -32,12 +32,16 @@ export function getDayOfWeekString(workDay:DayOfWeek){
 export class WorkDay{
     public dayOfWeek:DayOfWeek;
     public shifts:Array<Shift> =[];
-    public constructor(dayOfWeek:DayOfWeek,startTimeSlot:string="",endTimeSlot:string="")
+    public workingDayId:number;
+    public firstShiftId:number=0;
+    public constructor(dayOfWeek:DayOfWeek,startTimeSlot:string="",endTimeSlot:string="", workingDayId:number=0,firstShiftId:number=0)
     {
         this.dayOfWeek =dayOfWeek;
+        this.workingDayId = workingDayId;
+        this.firstShiftId = firstShiftId;
         if(startTimeSlot!=="" && endTimeSlot!=="")
         {
-            this.shifts.push({startTimeSlot,endTimeSlot});
+            this.shifts.push({startTimeSlot,endTimeSlot,timeIntervalId:firstShiftId});
         }
        
     }
@@ -59,10 +63,11 @@ export class WorkDay{
 export class Shift{
     public startTimeSlot:string;
     public  endTimeSlot:string;
-
-    constructor(startTimeSlot:string,endTimeSlot:string)
+    public timeIntervalId:number
+    constructor(startTimeSlot:string,endTimeSlot:string,  timeIntervalId:number =0)
     {
         this.startTimeSlot =startTimeSlot;
         this.endTimeSlot =endTimeSlot;
+        this.timeIntervalId = timeIntervalId;
     }
 }

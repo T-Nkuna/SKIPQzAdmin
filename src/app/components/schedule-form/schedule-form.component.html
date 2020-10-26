@@ -1,7 +1,7 @@
        <div style='display:grid;grid-template-columns: auto auto;column-gap: 2em;padding:1em'>
         <div>
             <p style="text-align: center;"><b>Service Provider</b> </p>
-            <form class="app-schedule-form-service-provider-form" (ngSubmit)="onSubmit()" #serviceProviderForm>
+            <form class="app-schedule-form-service-provider-form" (ngSubmit)="onSubmit()" #serviceProviderForm  >
                 
                    <label>Name</label><input required nbInput status='primary' type="text" name="name" [(ngModel)]='serviceProvider.name'/>
                    <label>Email</label><input required nbInput status='primary' type="email" name="email" [(ngModel)]='serviceProvider.email'/>

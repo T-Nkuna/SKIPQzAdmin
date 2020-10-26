@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ScheduledServiceProvider } from '../models/scheduled-service-provider.model';
 import { ServiceProviderModel } from '../models/service-provider.model';
 import { ConfigurationService } from './configuration.service';
 import { JournalingService } from './journaling.service';
@@ -29,12 +30,12 @@ export class ServiceProviderService extends JournalingService{
     .catch(err=>this.reportError(err,new ServiceProviderModel()));
   }
 
-  updateServiceProvider(serviceProvider:ServiceProviderModel){
-     return this._httpClient.put<ServiceProviderModel>(
-       `${this._serviceUrl}/${serviceProvider.serviceProviderId}`,
-       serviceProvider
+  updateServiceProvider(serviceProvider:ScheduledServiceProvider){
+     return this._httpClient.put<ScheduledServiceProvider>(
+       `${this._serviceUrl}`,
+       this.toForm(serviceProvider)
      ).toPromise()
-     .catch(err=>this.reportError(err,new ServiceProviderModel));
+     .catch(err=>this.reportError(err,new ScheduledServiceProvider(new ServiceProviderModel(),[])));
   }
 
   getServiceProviders(pageNumber:number,pageSize:number)
