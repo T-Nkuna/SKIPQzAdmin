@@ -47,11 +47,13 @@ export class ServicesComponent implements OnInit,AfterViewInit {
 
   ngAfterViewInit(){
     this.actions = [
-      {icon:"edit-outline",rowclick:this.editService ,popupTrigger:true,popupContent:this.editServiceTemplate,text:""}
+      {icon:"edit-outline",rowclick:this.editService ,popupTrigger:true,popupContent:this.editServiceTemplate,text:""},
+      {icon:"trash-outline",rowclick:this.deleteService,text:""}
     ];
 
     this.extraActions = [
-      {icon:"edit-outline",rowclick:this.editExtra ,popupTrigger:true,popupContent:this.editExtraTemplate,text:""}
+      {icon:"edit-outline",rowclick:this.editExtra ,popupTrigger:true,popupContent:this.editExtraTemplate,text:""},
+      {icon:"trash-outline",rowclick:this.deleteExtra,text:""}
     ];
   }
 
@@ -109,7 +111,17 @@ export class ServicesComponent implements OnInit,AfterViewInit {
 
   deleteService = (serviceModel:ServiceModel)=>
   {
-
+      this._configService.showSpinner();
+      this._serviceManagerService.deleteService(serviceModel.serviceId)
+      .then(deletedService=>{
+        if(deletedService.serviceId>0)
+        {
+          this.services = this.services.filter(sv=>sv.serviceId!==deletedService.serviceId);
+          alert("Deleted");
+        }
+      }).finally(()=>{
+        this._configService.hideSpinner();
+      })
   }
 
   addService = (serviceModel:ServiceModel)=>{
@@ -167,6 +179,19 @@ tabChanged(tabComponent:NbTabComponent){
       }
 
       this.openedDialog.close();
+    }).finally(()=>this._configService.hideSpinner());
+  }
+
+  deleteExtra = (extra:ExtraModel)=>
+  {
+    this._configService.showSpinner();
+    this._extraManagerService.deleteExtra(extra.extraId)
+    .then(deletedExtra=>{
+        if(deletedExtra.extraId>0)
+        {
+          this.extras = this.extras.filter(ex=>ex.extraId!==deletedExtra.extraId);
+        }
+        alert("Deleted!");
     }).finally(()=>this._configService.hideSpinner());
   }
 }

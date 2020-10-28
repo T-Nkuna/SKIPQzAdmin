@@ -8,6 +8,7 @@ export class ServiceModel{
     public serviceId:number = -1;
     public imageFile:File = null;
     public imageUrl:string="";
+    public extraIds:Array<number> = [];
     constructor(name:string,duration:number,cost:number,serviceProviders:Array<ServiceProviderModel>=[],imageFile:File=null,imageUrl:string="")
     {
         this.name =name;
