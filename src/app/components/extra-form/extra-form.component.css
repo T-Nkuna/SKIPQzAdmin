@@ -1,0 +1,10 @@
+.app-extra-form
+{
+    display:flex;
+    flex-direction:column;
+    padding:1em;
+}
+
+.app-extra-form>*{
+    margin:0.25em;
+}

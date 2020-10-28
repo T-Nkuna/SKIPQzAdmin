@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 export class ConfigurationService {
 
  
-  private _env = "dev";
+  private _env = "prod";
   public busy =false;
   constructor() { }
 

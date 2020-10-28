@@ -1,11 +1,23 @@
 <nb-layout>
     <nb-layout-column>
-        <div class="app-services-container">
-            <div class="app-services-buttons-container">
-                <button nbButton outline (click)="open(addServiceTemplate)"><nb-icon icon="plus-outline"></nb-icon>Service</button>
-            </div>
-            <app-table [rows]="services" [actions]="actions" [excludedColumns]="excludedColumns"></app-table>
-        </div>
+        <nb-tabset (changeTab)="tabChanged($event)">
+            <nb-tab [tabTitle]="'Services'">
+                <div class="app-services-container">
+                    <div class="app-services-buttons-container">
+                        <button nbButton outline (click)="open(addServiceTemplate)"><nb-icon icon="plus-outline"></nb-icon>Service</button>
+                    </div>
+                    <app-table [rows]="services" [actions]="actions" [excludedColumns]="excludedColumns"></app-table>
+                </div>
+            </nb-tab>
+            <nb-tab [tabTitle]="'Extras'">
+                <div class="app-services-container">
+                    <div class="app-services-buttons-container">
+                        <button nbButton outline (click)="open(addExtraTemplate)"><nb-icon icon="plus-outline"></nb-icon>Extra</button>
+                    </div>
+                    <app-table [rows]="extras" [actions]="extraActions" [excludedColumns]="[]"></app-table>
+                </div>
+            </nb-tab>
+        </nb-tabset>
     </nb-layout-column>
 </nb-layout>
 
@@ -19,5 +31,17 @@
     <div style="background-color: #303040;">
         <app-service-form [service]="addedService" (serviceSubmit)="addService($event)">
         </app-service-form>
+    </div>
+</ng-template>
+<ng-template #addExtraTemplate>
+    <div style="background-color: #303040;">
+        <app-extra-form [extra] ="addedExtra" (extraSubmit)="addExtra($event)">
+        </app-extra-form>
+    </div>
+</ng-template>
+<ng-template #editExtraTemplate>
+    <div style="background-color: #303040;">
+        <app-extra-form [extra] ="editedExtra" (extraSubmit)="submitExtraEditions($event)">
+        </app-extra-form>
     </div>
 </ng-template>

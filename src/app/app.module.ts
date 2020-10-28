@@ -17,6 +17,7 @@ import { ScheduleFormComponent } from './components/schedule-form/schedule-form.
 import { SchedulingService } from './services/scheduling.service';
 import { ServiceFormComponent } from './components/service-form/service-form.component';
 import { ServiceManagerService } from './services/service-manager.service';
+import { ExtraFormComponent } from './components/extra-form/extra-form.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ServiceManagerService } from './services/service-manager.service';
     TableComponent,
     IconButtonComponent,
     ScheduleFormComponent,
-    ServiceFormComponent
+    ServiceFormComponent,
+    ExtraFormComponent
   ],
   imports: [
     BrowserModule,

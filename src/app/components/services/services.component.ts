@@ -1,7 +1,9 @@
 import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { NbDialogConfig, NbDialogRef, NbDialogService } from '@nebular/theme';
+import { NbDialogConfig, NbDialogRef, NbDialogService, NbTabComponent } from '@nebular/theme';
+import { ExtraModel } from 'src/app/models/extra.model';
 import { ServiceProviderModel } from 'src/app/models/service-provider.model';
 import { ConfigurationService } from 'src/app/services/configuration.service';
+import { ExtraManagerService } from 'src/app/services/extra-manager.service';
 import { ServiceManagerService } from 'src/app/services/service-manager.service';
 import {ServiceModel} from "../../models/service.model";
 import { RowAction } from '../table/table.component';
@@ -13,29 +15,44 @@ import { RowAction } from '../table/table.component';
 export class ServicesComponent implements OnInit,AfterViewInit {
 
   public services:Array<ServiceModel> = [];
+  public extras:Array<ExtraModel> = [];
   public addedService:ServiceModel = new ServiceModel("",0,0);
   public editedService:ServiceModel = new ServiceModel("",0,0);
+  public editedExtra:ExtraModel = new ExtraModel();
+  public addedExtra = new ExtraModel();
   public actions:Array<RowAction<ServiceModel>> = [];
+  public extraActions: Array<RowAction<ExtraModel>> = [];
   public openedDialog:NbDialogRef<any>;
   public excludedColumns:string[] = ["imageFile","imageUrl"];
+  public tabData = [
+    {tabTitle:"Services"},
+    {tabTitle:"Extras"}
+  ];
+
   editDialog:NbDialogRef<any>;
   @ViewChild("editServiceTemplate") public editServiceTemplate:TemplateRef<any>;
-  constructor(private _dialogService:NbDialogService,private _configService:ConfigurationService,private _serviceManagerService:ServiceManagerService) {
+  @ViewChild("editExtraTemplate") public editExtraTemplate:TemplateRef<any>;
+  constructor(
+    private _dialogService:NbDialogService,
+    private _configService:ConfigurationService,
+    private _serviceManagerService:ServiceManagerService,
+    private _extraManagerService:ExtraManagerService
+    ) {
       
    }
 
   ngOnInit(): void {
-    this._configService.showSpinner();
-    this._serviceManagerService.getServices(1,10)
-    .then(services=>{
-      this.services = services;
-    }).finally(()=>this._configService.hideSpinner())
+    
   }
 
   ngAfterViewInit(){
     this.actions = [
       {icon:"edit-outline",rowclick:this.editService ,popupTrigger:true,popupContent:this.editServiceTemplate,text:""}
-    ]
+    ];
+
+    this.extraActions = [
+      {icon:"edit-outline",rowclick:this.editExtra ,popupTrigger:true,popupContent:this.editExtraTemplate,text:""}
+    ];
   }
 
   editService = (serviceModel:ServiceModel,dialogRef:NbDialogRef<any>)=>
@@ -51,6 +68,27 @@ export class ServicesComponent implements OnInit,AfterViewInit {
       }).finally(()=>this._configService.hideSpinner())*/
   }
 
+  editExtra = (extraModel:ExtraModel,dialogRef:NbDialogRef<any>)=>{
+      this.editedExtra = extraModel;
+      this.editDialog = dialogRef;
+  }
+
+  submitExtraEditions = (extra:ExtraModel)=>{
+    this._configService.showSpinner();
+    this._extraManagerService.updateExtra(extra)
+    .then(updatedExtra=>{
+      if(updatedExtra.extraId>0){
+        alert("Updated");
+      }
+
+      this.extras = this.extras.map(ex=>ex.extraId===updatedExtra.extraId?updatedExtra:ex);
+    }).finally(()=>{
+      this._configService.hideSpinner();
+      if(this.editDialog){
+        this.editDialog.close();
+      }
+    });
+  }
   submitServiceEditions = (service:ServiceModel)=>{
 
      this._configService.showSpinner();
@@ -99,5 +137,36 @@ export class ServicesComponent implements OnInit,AfterViewInit {
   {
    this.openedDialog= this._dialogService.open(templateEle);
   }
+tabChanged(tabComponent:NbTabComponent){
+      switch(tabComponent.tabTitle){
+        case "Services":
+          //fetch services
+          this._configService.showSpinner();
+          this._serviceManagerService.getServices(1,10)
+          .then(services=>{
+            this.services = services;
+          }).finally(()=>this._configService.hideSpinner())
+        break;
+        case "Extras":
+          //fetch extras
+          this._configService.showSpinner();
+          this._extraManagerService.getAllExtras()
+          .then(extras=>{
+            this.extras =extras;
+          }).finally(()=>this._configService.hideSpinner());
+        break;
+      }
+  }
 
+  addExtra=(extra:ExtraModel)=>{
+    this._configService.showSpinner();
+    this._extraManagerService.addExtra(extra)
+    .then(addedExtra=>{
+      if(addedExtra.extraId>0){
+        this.extras = [addedExtra].concat(this.extras);
+      }
+
+      this.openedDialog.close();
+    }).finally(()=>this._configService.hideSpinner());
+  }
 }

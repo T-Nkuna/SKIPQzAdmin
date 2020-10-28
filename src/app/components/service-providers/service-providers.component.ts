@@ -94,21 +94,26 @@ export class ServiceProvidersComponent implements OnInit,AfterViewInit {
           .finally(()=>this._configService.hideSpinner());
   }
 
-  editServiceProvider = (serviceProvider:ScheduledServiceProvider)=>{
+  editServiceProvider = (serviceProvider:ScheduledServiceProvider,dialogRef:NbDialogRef<any>)=>{
       this.serviceProviderEditedData = serviceProvider;
-     
+      this.openedDialog = dialogRef;
   }
 
   submitServiceProviderEditions= (serviceProviderEdition:ScheduledServiceProvider)=>
   {
    
    // serviceProviderEdition.services.forEach(sv=>sv.serviceId=undefined);
+   this._configService.showSpinner();
     this._serviceProviderService.updateServiceProvider(serviceProviderEdition)
     .then(updatedServiceProvider=>{
         this.serviceProviderEditedData = updatedServiceProvider;
         this.serviceProviders = this.serviceProviders.map(sp=>{
           return sp.serviceProviderId ===this.serviceProviderEditedData.serviceProviderId?this.serviceProviderEditedData:sp;
-        })
+        });
+        alert("Updated");
+    }).finally(()=>{
+      this._configService.hideSpinner();
+      this.openedDialog.close();
     });
     //console.log(serviceProviderEdition);
   }

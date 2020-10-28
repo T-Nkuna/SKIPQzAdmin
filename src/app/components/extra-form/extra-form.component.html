@@ -1,0 +1,7 @@
+<div class="app-service-form-container">
+    <form (ngSubmit)="onSubmit()" class="app-extra-form">
+        <label>Name</label><input nbInput status="primary" type="text" name="name" [(ngModel)]="extra.name">
+        <label>Cost</label><input  nbInput status="primary" type="text" name="cost" [(ngModel)]="extra.cost">
+        <button nbButton status="primary">Submit</button>
+    </form>
+</div>
