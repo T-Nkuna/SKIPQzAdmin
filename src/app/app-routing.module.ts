@@ -5,7 +5,8 @@ import { ServicesComponent } from './components/services/services.component';
 
 const routes: Routes = [
   {path:"serviceProviders", component:ServiceProvidersComponent},
-  {path:"services",component:ServicesComponent}
+  {path:"services",component:ServicesComponent},
+  {path:"",redirectTo:"serviceProviders",pathMatch:"full"}
 ];
 
 @NgModule({
@@ -13,3 +14,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+ 

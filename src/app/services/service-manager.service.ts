@@ -49,7 +49,7 @@ export class ServiceManagerService extends JournalingService{
     updateService(service:ServiceModel)
     {
         return this._httpClient.put<ServiceModel>(
-            `${this.serviceUrl}/${service.serviceId}`,
+            `${this.serviceUrl}`,
             this.toForm(service)
         )
         .toPromise()

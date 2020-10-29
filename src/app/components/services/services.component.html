@@ -23,7 +23,7 @@
 
 <ng-template #editServiceTemplate>
     <div style="background-color: #303040;">
-        <app-service-form [service]="editedService" (serviceSubmit)="submitServiceEditions($event)">
+        <app-service-form [service]="editedService" [selectedExtrasIds]="editedService.extraIds" (serviceSubmit)="submitServiceEditions($event)">
         </app-service-form>
     </div>
 </ng-template>

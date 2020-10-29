@@ -23,7 +23,7 @@ export class ServicesComponent implements OnInit,AfterViewInit {
   public actions:Array<RowAction<ServiceModel>> = [];
   public extraActions: Array<RowAction<ExtraModel>> = [];
   public openedDialog:NbDialogRef<any>;
-  public excludedColumns:string[] = ["imageFile","imageUrl"];
+  public excludedColumns:string[] = ["imageFile","imageUrl","extraIds"];
   public tabData = [
     {tabTitle:"Services"},
     {tabTitle:"Extras"}

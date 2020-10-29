@@ -4,7 +4,7 @@
         <label>Duration</label><input nbInput status="primary" type="text" name="duration" [(ngModel)]="service.duration">
         <label>Cost</label><input  nbInput status="primary" type="text" name="cost" [(ngModel)]="service.cost">
         <label>Image File</label><input name="imageFile" type="file" nbInput status="primary">
-        <label>Extras</label><nb-select multiple [(ngModel)] ="selectedExtrasIds" name="extras">
+        <label>Extras</label><nb-select multiple [selected] ="selectedExtrasIds" name="extras" (selectedChange)="selectedExtrasChanged($event)">
             <nb-option [value]="extra.extraId" *ngFor="let extra of extras">{{extra.name +' - '+ extra.extraId}}</nb-option>
         </nb-select>
         <button nbButton status="primary">Submit</button>

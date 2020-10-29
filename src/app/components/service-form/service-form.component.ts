@@ -41,4 +41,8 @@ export class ServiceFormComponent implements OnInit {
     this.serviceSubmit.emit(this.service);
   }
 
+  selectedExtrasChanged(extraIds:number[])
+  {
+    this.selectedExtrasIds = extraIds;
+  }
 }
