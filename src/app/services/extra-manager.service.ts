@@ -28,14 +28,14 @@ export class ExtraManagerService extends JournalingService {
 
   public deleteExtra(extraId:number)
   {
-    return this._httpClient.delete<ExtraModel>(`${this.serviceUrl}/${extraId}`)
+    return this._httpClient.post<ExtraModel>(`${this.serviceUrl}/${extraId}`,{})
     .toPromise()
     .catch(err=>this.reportError(err,new ExtraModel()));
   }
 
   public updateExtra(extra:ExtraModel)
   {
-    return this._httpClient.put<ExtraModel>(`${this.serviceUrl}`,extra)
+    return this._httpClient.post<ExtraModel>(`${this.serviceUrl}/Update`,extra)
     .toPromise()
     .catch(err=>this.reportError(err,new ExtraModel()));
   }

@@ -18,6 +18,7 @@ export class ExtraFormComponent implements OnInit {
   onSubmit()
   {
     this.extra.cost = parseFloat(this.extra.cost.toString());
+    this.extra.duration = parseFloat(this.extra.duration.toString());
      this.extraSubmit.emit(this.extra);
   }
 

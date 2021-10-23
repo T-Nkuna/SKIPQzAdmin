@@ -41,15 +41,15 @@ export class ServiceManagerService extends JournalingService{
 
     deleteService(serviceId:number)
     {
-        return this._httpClient.delete<ServiceModel>(`${this.serviceUrl}/${serviceId}`)
+        return this._httpClient.post<ServiceModel>(`${this.serviceUrl}/${serviceId}`,{})
         .toPromise()
         .catch(err=>this.reportError<ServiceModel>(err,new ServiceModel("",0,0)));
     }
 
     updateService(service:ServiceModel)
     {
-        return this._httpClient.put<ServiceModel>(
-            `${this.serviceUrl}`,
+        return this._httpClient.post<ServiceModel>(
+            `${this.serviceUrl}/Update`,
             this.toForm(service)
         )
         .toPromise()

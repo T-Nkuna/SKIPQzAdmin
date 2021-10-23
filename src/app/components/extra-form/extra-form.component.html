@@ -1,7 +1,9 @@
 <div class="app-service-form-container">
     <form (ngSubmit)="onSubmit()" class="app-extra-form">
         <label>Name</label><input nbInput status="primary" type="text" name="name" [(ngModel)]="extra.name">
-        <label>Cost</label><input  nbInput status="primary" type="text" name="cost" [(ngModel)]="extra.cost">
+        <label>Cost</label><input  nbInput status="primary" type="number" name="cost" [(ngModel)]="extra.cost">
+        <label>Duration</label><input  nbInput status="primary" type="number" name="duration" [(ngModel)]="extra.duration">
+        
         <button nbButton status="primary">Submit</button>
     </form>
 </div>

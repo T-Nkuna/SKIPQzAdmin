@@ -24,15 +24,15 @@ export class ServiceProviderService extends JournalingService{
   }
 
   deleteServiceProvider(serviceProviderId:number){
-    return this._httpClient.delete<ServiceProviderModel>(
-      `${this._serviceUrl}/${serviceProviderId}`
+    return this._httpClient.post<ServiceProviderModel>(
+      `${this._serviceUrl}/${serviceProviderId}`,{}
     ).toPromise()
     .catch(err=>this.reportError(err,new ServiceProviderModel()));
   }
 
   updateServiceProvider(serviceProvider:ScheduledServiceProvider){
-     return this._httpClient.put<ScheduledServiceProvider>(
-       `${this._serviceUrl}`,
+     return this._httpClient.post<ScheduledServiceProvider>(
+       `${this._serviceUrl}/Update`,
        this.toForm(serviceProvider)
      ).toPromise()
      .catch(err=>this.reportError(err,new ScheduledServiceProvider(new ServiceProviderModel(),[])));
@@ -49,4 +49,4 @@ export class ServiceProviderService extends JournalingService{
   getAllServiceProvders(){
     return this.getServiceProviders(1,1000);
   }
-}
+}//
